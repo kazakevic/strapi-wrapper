@@ -12,11 +12,12 @@ class StrapiUriBuilderTest extends TestCase
     private const BASE_URL = 'https://localhost:port';
     private const ITEM_ID = 'my-collection-item-id';
 
-    public function testForItemsUri(): void
+    public function testForItemsUriWithLimit(): void
     {
-        $expected = 'https://localhost:port/api/my-collection-item-id/?';
+        $expected = 'https://localhost:port/api/my-collection-item-id/?pagination[start]=0&pagination[limit]=1000';
         $uri = (new StrapiUriBuilder(static::BASE_URL))
             ->forItems(static::ITEM_ID)
+            ->withOffsetAndLimit(1000)
             ->getUri();
         static::assertEquals($expected, $uri);
     }
@@ -43,7 +44,7 @@ class StrapiUriBuilderTest extends TestCase
 
     public function testForItemsWithPaginationUri(): void
     {
-        $expected = 'https://localhost:port/api/my-collection-item-id/?pagination%5Bstart%5D=0&pagination%5Blimit%5D=100';
+        $expected = 'https://localhost:port/api/my-collection-item-id/?pagination[start]=0&pagination[limit]=100';
         $uri = (new StrapiUriBuilder(static::BASE_URL))
             ->forItems(static::ITEM_ID)
             ->withOffsetAndLimit(100)
@@ -54,10 +55,23 @@ class StrapiUriBuilderTest extends TestCase
 
     public function testForItemsWithMediaWithPaginationUri(): void
     {
-        $expected = 'https://localhost:port/api/my-collection-item-id/?populate=%2Apagination%5Bstart%5D=0&pagination%5Blimit%5D=100';
+        $expected = 'https://localhost:port/api/my-collection-item-id/?populate=%2A&pagination[start]=0&pagination[limit]=100';
         $uri = (new StrapiUriBuilder(static::BASE_URL))
             ->forItems(static::ITEM_ID)
             ->withMedia()
+            ->withOffsetAndLimit(100)
+            ->getUri();
+
+        static::assertEquals($expected, $uri);
+    }
+
+    public function testForItemsWithFilter(): void
+    {
+        $expected = 'https://localhost:port/api/my-collection-item-id/?populate=%2A&filters[slug][$eq]=secret-slug&pagination[start]=0&pagination[limit]=100';
+        $uri = (new StrapiUriBuilder(static::BASE_URL))
+            ->forItems(static::ITEM_ID)
+            ->withMedia()
+            ->withFilter('slug', 'secret-slug')
             ->withOffsetAndLimit(100)
             ->getUri();
 

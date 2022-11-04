@@ -4,7 +4,7 @@
 > composer require kazakevic/strapi-wrapper
 ##### ⚙️ Usage
 
-> $httpClient = new Client();
+> $httpClient = new Client(); //Guzzle http client, but can be any suitable
 > 
 > $strapiClient = new StrapiClient(
 $httpClient,

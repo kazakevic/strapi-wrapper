@@ -26,33 +26,55 @@ class StrapiClient
      * @return string
      * @throws ClientExceptionInterface
      */
-    public function getItems(string $itemIdentifier): string
+    public function getItems(string $itemIdentifier, int $limit): string
     {
-        $uri = (new StrapiUriBuilder($this->baseUrl))->forItems($itemIdentifier)->withMedia()->getUri();
-        $request = new Request(
-            method: 'GET',
-            uri: $uri,
-            headers: $this->getHeaders()
-        );
+        $uri = (new StrapiUriBuilder($this->baseUrl))->forItems($itemIdentifier)
+            ->withMedia()
+            ->withOffsetAndLimit($limit)
+            ->getUri();
 
-        $response = $this->client->sendRequest($request);
+        $response = $this->client->sendRequest($this->getRequest($uri));
 
         return $response->getBody()->getContents();
     }
 
-    public function getItem(string $itemIdentifier, int $id): string
+    public function getItemById(string $itemIdentifier, int $id): string
     {
-        $uri = (new StrapiUriBuilder($this->baseUrl))->forItem($itemIdentifier, $id)->withMedia()->getUri();
+        $uri = (new StrapiUriBuilder($this->baseUrl))
+            ->forItem($itemIdentifier, $id)
+            ->withMedia()
+            ->getUri();
 
-        $request = new Request(
+        $response = $this->client->sendRequest($this->getRequest($uri));
+
+        return $response->getBody()->getContents();
+    }
+
+    public function getItemsBy(
+        string $itemIdentifier,
+        string $byFieldName,
+        string $byFieldValue,
+        int $limit = 50
+    ): string {
+        $uri = (new StrapiUriBuilder($this->baseUrl))
+            ->forItems($itemIdentifier)
+            ->withFilter($byFieldName, $byFieldValue)
+            ->withOffsetAndLimit($limit)
+            ->withMedia()
+            ->getUri();
+
+        $response = $this->client->sendRequest($this->getRequest($uri));
+
+        return $response->getBody()->getContents();
+    }
+
+    private function getRequest(string $uri) : Request
+    {
+        return new Request(
             method: 'GET',
             uri: $uri,
             headers: $this->getHeaders()
         );
-
-        $response = $this->client->sendRequest($request);
-
-        return $response->getBody()->getContents();
     }
 
     private function getUriString(): string

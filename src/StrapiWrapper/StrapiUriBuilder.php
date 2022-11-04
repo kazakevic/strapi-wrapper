@@ -35,6 +35,7 @@ class StrapiUriBuilder
 
     public function withMedia(): self
     {
+        $this->prependUri();
         $this->uri .= StrapiFilter::POPULATE->value . '=%2A';
 
         return $this;
@@ -42,12 +43,22 @@ class StrapiUriBuilder
 
     public function withOffsetAndLimit(int $limit, int $offset = 0): self
     {
-        $params = [
-            sprintf(StrapiFilter::PAGINATION->value, FilterOperator::START->value) => $offset,
-            sprintf(StrapiFilter::PAGINATION->value, FilterOperator::LIMIT->value) => $limit,
-        ];
+        $this->prependUri();
 
-        $this->uri .= http_build_query($params);
+        $filterUri = sprintf(StrapiFilter::PAGINATION->value, FilterOperator::START->value) . '=' . $offset . '&';
+        $filterUri .= sprintf(StrapiFilter::PAGINATION->value, FilterOperator::LIMIT->value) . '=' . $limit;
+
+        $this->uri .= $filterUri;
+
+        return $this;
+    }
+
+    public function withFilter(string $fieldName, string $fieldValue): self
+    {
+        $this->prependUri();
+        $uri = sprintf(StrapiFilter::FILTERS->value, $fieldName, FilterOperator::EQ->value) . '=' . $fieldValue;
+
+        $this->uri .= $uri;
 
         return $this;
     }
@@ -55,5 +66,12 @@ class StrapiUriBuilder
     public function getUri(): string
     {
         return $this->uri;
+    }
+
+    private function prependUri(): void
+    {
+        if (!str_ends_with($this->uri, '?') && !str_ends_with($this->uri, '&')) {
+            $this->uri .= '&';
+        }
     }
 }
