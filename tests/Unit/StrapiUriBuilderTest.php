@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace StrapiWrapper\Tests\Unit;
 
-use Kazakevic\StrapiWrapper\StrapiUriBuilder;
 use PHPUnit\Framework\TestCase;
+use Kazakevic\StrapiWrapper\StrapiUriBuilder;
 
 class StrapiUriBuilderTest extends TestCase
 {
