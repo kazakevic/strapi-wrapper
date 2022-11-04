@@ -1,8 +1,8 @@
-### Simple PHP client for https://strapi.io
+## Simple PHP client for https://strapi.io 🕸️
 
-##### Install
+##### ⚙️ Install
 > composer require kazakevic/strapi-wrapper
-##### Usage
+##### ⚙️ Usage
 
 > $httpClient = new Client();
 > 
@@ -14,5 +14,5 @@ $httpClient,
 > 
 > $jsonData = $strapiClient->getItems('seo-pages')
 
-##### Tests
+##### ⚙️ Tests
 > ./vendor/bin/phpunit tests

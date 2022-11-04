@@ -2,6 +2,7 @@
     "name": "kazakevic/strapi-wrapper",
     "description": "wrapper for Strapi cms",
     "type": "library",
+    "keywords": ["strapi php", "strapi client"],
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -20,6 +21,7 @@
         }
     ],
     "require": {
+        "php": ">=8.1",
         "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {

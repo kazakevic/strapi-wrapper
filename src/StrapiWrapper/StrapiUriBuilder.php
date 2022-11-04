@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kazakevic\StrapiWrapper;
 
+use Kazakevic\StrapiWrapper\Constants\FilterOperator;
 use Kazakevic\StrapiWrapper\Constants\StrapiFilter;
 
 class StrapiUriBuilder
@@ -35,6 +36,18 @@ class StrapiUriBuilder
     public function withMedia(): self
     {
         $this->uri .= StrapiFilter::POPULATE->value . '=%2A';
+
+        return $this;
+    }
+
+    public function withOffsetAndLimit(int $limit, int $offset = 0): self
+    {
+        $params = [
+            sprintf(StrapiFilter::PAGINATION->value, FilterOperator::START->value) => $offset,
+            sprintf(StrapiFilter::PAGINATION->value, FilterOperator::LIMIT->value) => $limit,
+        ];
+
+        $this->uri .= http_build_query($params);
 
         return $this;
     }

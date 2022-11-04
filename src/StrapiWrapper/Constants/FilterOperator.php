@@ -23,5 +23,12 @@ enum FilterOperator: string
     case STARTS_WITH = '$startsWith';
     case ENDS_WITH = '$endsWith';
     case OR = '$or';
-    case ANd = '$and';
+    case AND = '$and';
+
+    //pagination
+    case LIMIT = 'limit';
+    case START = 'start';
+    case PAGE = 'page';
+    case PAGE_SIZE = 'pageSize';
+    case WITH_COUNT = 'withCount';
 }
