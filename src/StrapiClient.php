@@ -23,6 +23,7 @@ class StrapiClient
 
     /**
      * @param string $itemIdentifier
+     * @param int $limit
      * @return string
      * @throws ClientExceptionInterface
      */
