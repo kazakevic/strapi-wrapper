@@ -69,7 +69,28 @@ class StrapiClient
         return $response->getBody()->getContents();
     }
 
-    private function getRequest(string $uri) : Request
+    public function createItem(string $itemIdentifier, array $data): string
+    {
+
+        $response = $this->client->sendRequest($this->getPostRequest($itemIdentifier, $data));
+
+        return $response->getBody()->getContents();
+    }
+
+    private function getPostRequest(string $itemIdentifier, array $data): Request
+    {
+        return new Request(
+            method: 'POST',
+            uri: $this->getUriString() . $itemIdentifier,
+            headers: [
+                ...$this->getHeaders(),
+                'Content-Type' => 'application/json'
+            ],
+            body: json_encode($data)
+        );
+    }
+
+    private function getRequest(string $uri): Request
     {
         return new Request(
             method: 'GET',
