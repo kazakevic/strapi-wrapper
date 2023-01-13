@@ -71,8 +71,14 @@ class StrapiClient
 
     public function createItem(string $itemIdentifier, array $data): string
     {
-
         $response = $this->client->sendRequest($this->getPostRequest($itemIdentifier, $data));
+
+        return $response->getBody()->getContents();
+    }
+
+    public function updateItem(string $itemIdentifier, int $id, array $data): string
+    {
+        $response = $this->client->sendRequest($this->getPutRequest($itemIdentifier, $id, $data));
 
         return $response->getBody()->getContents();
     }
@@ -86,6 +92,19 @@ class StrapiClient
                 ...$this->getHeaders(),
                 'Content-Type' => 'application/json'
             ],
+            body: json_encode($data)
+        );
+    }
+
+    private function getPutRequest(string $itemIdentifier, int $id, array $data): Request
+    {
+        return new Request(
+            method: 'PUT',
+            uri: $this->getUriString() . $itemIdentifier . '/' .$id,
+            headers: [
+                        ...$this->getHeaders(),
+                        'Content-Type' => 'application/json'
+                    ],
             body: json_encode($data)
         );
     }
