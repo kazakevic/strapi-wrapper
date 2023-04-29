@@ -24,6 +24,11 @@ $httpClient,
 $jsonData = $strapiClient->getItems('seo-pages', 100)
 ```
 
+* GetItemsBy
+```php
+$jsonData = $strapiClient->getItemsBy('seo-pages', 'fieldName', 'fieldValue', 100)
+```
+
 * CreateItem
 
 ```php

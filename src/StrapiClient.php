@@ -39,6 +39,9 @@ class StrapiClient
         return $response->getBody()->getContents();
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function getItemById(string $itemIdentifier, int $id): string
     {
         $uri = (new StrapiUriBuilder($this->baseUrl))
@@ -51,6 +54,9 @@ class StrapiClient
         return $response->getBody()->getContents();
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function getItemsBy(
         string $itemIdentifier,
         string $byFieldName,
@@ -69,6 +75,9 @@ class StrapiClient
         return $response->getBody()->getContents();
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function createItem(string $itemIdentifier, array $data): string
     {
         $response = $this->client->sendRequest($this->getPostRequest($itemIdentifier, $data));
@@ -76,6 +85,9 @@ class StrapiClient
         return $response->getBody()->getContents();
     }
 
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function updateItem(string $itemIdentifier, int $id, array $data): string
     {
         $response = $this->client->sendRequest($this->getPutRequest($itemIdentifier, $id, $data));

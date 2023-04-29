@@ -1,6 +1,6 @@
 {
     "name": "kazakevic/strapi-wrapper",
-    "description": "wrapper for Strapi cms",
+    "description": "wrapper for Strapi headless CMS",
     "type": "library",
     "keywords": ["strapi php", "strapi client"],
     "license": "MIT",
@@ -27,6 +27,9 @@
     "require-dev": {
         "symfony/var-dumper": "^6.1",
         "phpunit/phpunit": "^9"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "use it as HTTP client"
     },
     "config": {
         "sort-packages": true
