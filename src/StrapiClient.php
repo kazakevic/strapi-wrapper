@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kazakevic\StrapiWrapper;
 
 use GuzzleHttp\Psr7\Request;
+use Kazakevic\StrapiWrapper\Constants\SortOrder;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 
@@ -24,14 +25,21 @@ class StrapiClient
     /**
      * @param string $itemIdentifier
      * @param int $limit
+     * @param string $sortByField
+     * @param SortOrder $sortOrder
      * @return string
      * @throws ClientExceptionInterface
      */
-    public function getItems(string $itemIdentifier, int $limit): string
-    {
+    public function getItems(
+        string $itemIdentifier,
+        int $limit,
+        string $sortByField,
+        SortOrder $sortOrder = SortOrder::ASC
+    ): string {
         $uri = (new StrapiUriBuilder($this->baseUrl))->forItems($itemIdentifier)
             ->withMedia()
             ->withOffsetAndLimit($limit)
+            ->sortBy($sortByField, $sortOrder)
             ->getUri();
 
         $response = $this->client->sendRequest($this->getRequest($uri));
@@ -61,6 +69,8 @@ class StrapiClient
         string $itemIdentifier,
         string $byFieldName,
         string $byFieldValue,
+        string $sortByField,
+        SortOrder $sortOrder = SortOrder::ASC,
         int $limit = 50
     ): string {
         $uri = (new StrapiUriBuilder($this->baseUrl))
@@ -68,6 +78,7 @@ class StrapiClient
             ->withFilter($byFieldName, $byFieldValue)
             ->withOffsetAndLimit($limit)
             ->withMedia()
+            ->sortBy($sortByField, $sortOrder)
             ->getUri();
 
         $response = $this->client->sendRequest($this->getRequest($uri));

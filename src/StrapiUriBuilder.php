@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kazakevic\StrapiWrapper;
 
 use Kazakevic\StrapiWrapper\Constants\FilterOperator;
+use Kazakevic\StrapiWrapper\Constants\SortOrder;
 use Kazakevic\StrapiWrapper\Constants\StrapiFilter;
 
 class StrapiUriBuilder
@@ -59,6 +60,14 @@ class StrapiUriBuilder
         $uri = sprintf(StrapiFilter::FILTERS->value, $fieldName, FilterOperator::EQ->value) . '=' . $fieldValue;
 
         $this->uri .= $uri;
+
+        return $this;
+    }
+
+    public function sortBy(string $fieldName, SortOrder $sortOrder): self
+    {
+        $this->prependUri();
+        $this->uri .= StrapiFilter::SORT->value . '=' . $fieldName . ':' . $sortOrder->value;
 
         return $this;
     }

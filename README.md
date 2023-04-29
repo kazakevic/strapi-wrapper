@@ -18,18 +18,24 @@ $httpClient,
 );
 ```
 
-* GetItem
+* getItems
 
 ```php
-$jsonData = $strapiClient->getItems('seo-pages', 100)
+$jsonData = $strapiClient->getItems('seo-pages', 100, 'fieldNameToSortBy', SortOrder::DESC)
 ```
 
-* GetItemsBy
+* getItemById
+
 ```php
-$jsonData = $strapiClient->getItemsBy('seo-pages', 'fieldName', 'fieldValue', 100)
+$jsonData = $strapiClient->getItemById('seo-pages', 534546)
 ```
 
-* CreateItem
+* getItemsBy
+```php
+$jsonData = $strapiClient->getItemsBy('seo-pages', 'fieldName', 'fieldValue', 'id', SortOrder::DESC, 100)
+```
+
+* createItem
 
 ```php
 $jsonData = $strapiClient->createItem('topics', [
@@ -44,7 +50,7 @@ $jsonData = $strapiClient->createItem('topics', [
 ]
 ]);
 ```
-* UpdateItem
+* updateItem
 
 ```php
 $jsonData = $strapiClient->updateItem('topics', 1, [
