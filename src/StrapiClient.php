@@ -68,8 +68,8 @@ class StrapiClient
         string $itemIdentifier,
         string $byFieldName,
         string $byFieldValue,
-        ?PageFilter $pageFilter = null,
-        ?SortFilter $sortFilter = null
+        PageFilter $pageFilter,
+        SortFilter $sortFilter
     ): string {
         $uri = (new StrapiUriBuilder($this->baseUrl))
             ->forItems($itemIdentifier)
