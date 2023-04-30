@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Kazakevic\StrapiWrapper;
 
 use GuzzleHttp\Psr7\Request;
-use Kazakevic\StrapiWrapper\Constants\SortOrder;
+use Kazakevic\StrapiWrapper\Filters\PageFilter;
+use Kazakevic\StrapiWrapper\Filters\SortFilter;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 
@@ -24,22 +25,20 @@ class StrapiClient
 
     /**
      * @param string $itemIdentifier
-     * @param int $limit
-     * @param string $sortByField
-     * @param SortOrder $sortOrder
+     * @param PageFilter $pageFilter
+     * @param SortFilter $sortFilter
      * @return string
      * @throws ClientExceptionInterface
      */
     public function getItems(
         string $itemIdentifier,
-        int $limit,
-        string $sortByField,
-        SortOrder $sortOrder = SortOrder::ASC
+        PageFilter $pageFilter,
+        SortFilter $sortFilter
     ): string {
         $uri = (new StrapiUriBuilder($this->baseUrl))->forItems($itemIdentifier)
             ->withMedia()
-            ->withOffsetAndLimit($limit)
-            ->sortBy($sortByField, $sortOrder)
+            ->withOffsetAndLimit($pageFilter->getLimit(), $pageFilter->getOffset())
+            ->sortBy($sortFilter->getSortByFieldName(), $sortFilter->getSortOrder())
             ->getUri();
 
         $response = $this->client->sendRequest($this->getRequest($uri));
@@ -69,16 +68,15 @@ class StrapiClient
         string $itemIdentifier,
         string $byFieldName,
         string $byFieldValue,
-        string $sortByField,
-        SortOrder $sortOrder = SortOrder::ASC,
-        int $limit = 50
+        ?PageFilter $pageFilter = null,
+        ?SortFilter $sortFilter = null
     ): string {
         $uri = (new StrapiUriBuilder($this->baseUrl))
             ->forItems($itemIdentifier)
             ->withFilter($byFieldName, $byFieldValue)
-            ->withOffsetAndLimit($limit)
+            ->withOffsetAndLimit($pageFilter->getLimit(), $pageFilter->getOffset())
             ->withMedia()
-            ->sortBy($sortByField, $sortOrder)
+            ->sortBy($sortFilter->getSortByFieldName(), $sortFilter->getSortOrder())
             ->getUri();
 
         $response = $this->client->sendRequest($this->getRequest($uri));

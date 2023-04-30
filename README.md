@@ -1,13 +1,15 @@
 ## Simple PHP client for https://strapi.io 🕸️
 
-
 ##### ⚙️ Install
+
 ```bash
 composer require kazakevic/strapi-wrapper
 ```
 ##### ⚙️ Usage
 
 * Setup Client 
+  * You can use any HTTP client that implements `Psr\Http\Client\ClientInterface` 
+  
 ```php
 $httpClient = new Client(); //Guzzle http client, but can be any suitable
 
@@ -21,7 +23,11 @@ $httpClient,
 * getItems
 
 ```php
-$jsonData = $strapiClient->getItems('seo-pages', 100, 'fieldNameToSortBy', SortOrder::DESC)
+$response = $strapiClient->getItems(
+    'item-identifier',
+    new PageFilter(100),
+    new SortFilter('id', SortOrder::DESC)
+);
 ```
 
 * getItemById
@@ -32,7 +38,13 @@ $jsonData = $strapiClient->getItemById('seo-pages', 534546)
 
 * getItemsBy
 ```php
-$jsonData = $strapiClient->getItemsBy('seo-pages', 'fieldName', 'fieldValue', 'id', SortOrder::DESC, 100)
+    $response = $strapiClient->getItemsBy(
+        'item-identifier',
+        'fieldName',
+        'fieldValue',
+        new PageFilter(100),
+        new SortFilter('id', SortOrder::DESC)
+    );
 ```
 
 * createItem

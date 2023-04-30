@@ -15,10 +15,10 @@ class StrapiUriBuilderTest extends TestCase
 
     public function testForItemsUriWithLimit(): void
     {
-        $expected = 'https://localhost:port/api/my-collection-item-id/?pagination[start]=0&pagination[limit]=1000';
+        $expected = 'https://localhost:port/api/my-collection-item-id/?pagination[start]=10&pagination[limit]=1000';
         $uri = (new StrapiUriBuilder(static::BASE_URL))
             ->forItems(static::ITEM_ID)
-            ->withOffsetAndLimit(1000)
+            ->withOffsetAndLimit(1000, 10)
             ->getUri();
         static::assertEquals($expected, $uri);
     }
