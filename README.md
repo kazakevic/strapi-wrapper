@@ -1,5 +1,7 @@
 ## Simple PHP client for https://strapi.io 🕸️
 
+[![Latest Stable Version](http://poser.pugx.org/kazakevic/strapi-wrapper/v)](https://packagist.org/packages/kazakevic/strapi-wrapper) [![Total Downloads](http://poser.pugx.org/kazakevic/strapi-wrapper/downloads)](https://packagist.org/packages/kazakevic/strapi-wrapper) [![Latest Unstable Version](http://poser.pugx.org/kazakevic/strapi-wrapper/v/unstable)](https://packagist.org/packages/kazakevic/strapi-wrapper) [![License](http://poser.pugx.org/kazakevic/strapi-wrapper/license)](https://packagist.org/packages/kazakevic/strapi-wrapper) [![PHP Version Require](http://poser.pugx.org/kazakevic/strapi-wrapper/require/php)](https://packagist.org/packages/kazakevic/strapi-wrapper)
+
 ##### ⚙️ Install
 
 ```bash
