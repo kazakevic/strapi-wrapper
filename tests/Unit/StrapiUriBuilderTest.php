@@ -32,6 +32,16 @@ class StrapiUriBuilderTest extends TestCase
         static::assertEquals($expected, $uri);
     }
 
+    public function testForItemSingle(): void
+    {
+        $expected = 'https://localhost:port/api/' . self::ITEM_ID . '/';
+        $uri = (new StrapiUriBuilder(static::BASE_URL))
+            ->forItemSingle(static::ITEM_ID)
+            ->getUri();
+
+        static::assertEquals($expected, $uri);
+    }
+
     public function testForItemsWithMedia(): void
     {
         $expected = 'https://localhost:port/api/my-collection-item-id/?populate=%2A';

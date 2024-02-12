@@ -49,6 +49,16 @@ class StrapiClient
     /**
      * @throws ClientExceptionInterface
      */
+    public function getItemSingle(string $itemIdentifier): string
+    {
+        $uri = (new StrapiUriBuilder($this->baseUrl))->forItemSingle($itemIdentifier)->getUri();
+        $response = $this->client->sendRequest($this->getRequest($uri));
+        return $response->getBody()->getContents();
+    }
+
+    /**
+     * @throws ClientExceptionInterface
+     */
     public function getItemById(string $itemIdentifier, int $id): string
     {
         $uri = (new StrapiUriBuilder($this->baseUrl))

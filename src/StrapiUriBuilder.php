@@ -34,6 +34,12 @@ class StrapiUriBuilder
         return $this;
     }
 
+    public function forItemSingle(string $itemIdentifier): self
+    {
+        $this->uri = $this->baseUrl . '/api/' . $itemIdentifier . '/';
+        return $this;
+    }
+
     public function withMedia(): self
     {
         $this->prependUri();
